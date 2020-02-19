@@ -24,7 +24,9 @@
               <a
                 href="#!"
                 class="body-2 black--text"
-              >EDIT</a>
+              >
+                EDIT
+              </a>
             </v-col>
           </v-row>
           <v-list-group
@@ -37,7 +39,15 @@
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title>
-                  {{ item.text }}
+                  <router-link
+                    v-if="item.cta"
+                    :to="{path: item.cta}"
+                  >
+                    {{ item.text }}
+                  </router-link>
+                  <span v-else>
+                    {{ item.text }}
+                  </span>
                 </v-list-item-title>
               </v-list-item-content>
             </template>
@@ -50,7 +60,15 @@
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title>
+                <router-link
+                  v-if="child.cta"
+                  :to="{path: child.cta}"
+                >
+                  <v-list-item-title>
+                    {{ child.text }}
+                  </v-list-item-title>
+                </router-link>
+                <v-list-item-title v-else>
                   {{ child.text }}
                 </v-list-item-title>
               </v-list-item-content>
@@ -270,7 +288,7 @@ export default {
     dialog: false,
     drawer: null,
     items: [
-      { icon: 'mdi-contacts', text: 'Contacts' },
+      { icon: 'mdi-contacts', text: 'Contacts', cta: 'about' },
       { icon: 'mdi-history', text: 'Frequently contacted' },
       { icon: 'mdi-content-copy', text: 'Duplicates' },
       {
@@ -278,7 +296,7 @@ export default {
         'icon-alt': 'mdi-chevron-down',
         text: 'Labels',
         model: true,
-        children: [{ icon: 'mdi-plus', text: 'Create label' }],
+        children: [{ icon: 'mdi-plus', text: 'Create label', cta: 'about' }],
       },
       {
         icon: 'mdi-chevron-up',
